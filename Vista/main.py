@@ -20,6 +20,8 @@ class main:
         self.pc = PhotoImage(file="../Imagenes/PC.png")
         self.uc = PhotoImage(file="../Imagenes/UC.png")
         self.ac = PhotoImage(file="../Imagenes/AC.png")
+        self.banco = PhotoImage(file="../Imagenes/banco.png")
+        self.op1 = PhotoImage(file="../Imagenes/op.png")
         #self.donkey = PhotoImage(file="../Images/donkey1.png")
         #self.plane = PhotoImage(file="../Images/plane.png")
         #self.car = PhotoImage(file="../Images/car.png")
@@ -31,8 +33,6 @@ class main:
         self.frame.pack(fill="both")
         self.frame.config(width=1360, height=760, bg='navy')
 
-        self.entry2 = StringVar()
-        self.textField2 = Entry(self.frame, textvariable=self.entry2).place(x=10, y=30)
 
         self.entry3 = StringVar()
         self.textField3 = Entry(self.frame, textvariable=self.entry3).place(x=10, y=60)
@@ -53,8 +53,7 @@ class main:
         self.map = Canvas(self.frame, width=1360, height = 760, bg='grey')
         self.map.place(x=250, y=0)
 
-
-        #self.map.create_rectangle(800, 400, 1000, 300, fill="indian red")
+        #self.map.create_rectangle(530, 30, 600, 100, fill="gold")
 
         self.map.create_image(10, 200, anchor=NW, image=self.alu)
         self.map.create_text(250, 530, fill="black", font="Times 30", text="ALU")
@@ -68,14 +67,23 @@ class main:
         self.map.create_image(30, 610, anchor=NW, image=self.mbr)
         self.map.create_text(100, 680, fill="black", font="Times 30", text="MBR")
 
-        self.map.create_image(700, 200, anchor=NW, image=self.pc)
-        self.map.create_text(770, 270, fill="black", font="Times 30", text="PC")
+        self.map.create_image(800, 200, anchor=NW, image=self.pc)
+        self.map.create_text(870, 270, fill="black", font="Times 30", text="PC")
 
-        self.map.create_image(700, 350, anchor=NW, image=self.uc)
-        self.map.create_text(770, 420, fill="black", font="Times 30", text="UC")
+        self.map.create_image(800, 350, anchor=NW, image=self.uc)
+        self.map.create_text(870, 420, fill="black", font="Times 30", text="UC")
 
-        self.map.create_image(700, 500, anchor=NW, image=self.ac)
-        self.map.create_text(770, 570, fill="black", font="Times 30", text="AC")
+        self.map.create_image(800, 500, anchor=NW, image=self.ac)
+        self.map.create_text(870, 570, fill="black", font="Times 30", text="AC")
+
+        self.map.create_image(470, 350, anchor=NW, image=self.banco)
+        self.map.create_text(540, 570, fill="black", font="Times 30", text="Banco Registros")
+
+        self.map.create_image(20, 190, anchor=NW, image=self.op1)
+        self.map.create_text(50, 220, fill="black", font="Times 30", text="OP1")
+
+        self.map.create_image(350, 190, anchor=NW, image=self.op1)
+        self.map.create_text(380, 220, fill="black", font="Times 30", text="OP2")
 
         #self.openFile()
         self.app.mainloop()
