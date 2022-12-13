@@ -1,6 +1,4 @@
 from tkinter import *
-#from Sistema.Graph import Graph
-#from Sistema.Vertex import Vertex
 
 class main:
     def __init__(self):
@@ -14,7 +12,23 @@ class main:
         self.frame.pack(fill="both")
         self.frame.config(width=1360, height=760, bg='navy')
 
-        self.texto = Text(self.frame, height=20, width=25).place(x=10, y=60)
+        self.simbolos = {'Input': ('Ingresar', 1),
+                         'Output': ('Mostrar', 2),
+                         'Compare': ('Comparar', 3),
+                         'Clear': ('Limpiar', 4),
+                         'Set': ('Ingresar', 5),
+                         'Push': ('Ingresar', 6),
+                         'Pop': ('Sacar', 7),
+                         'Incremet': ('Incrementar', 8),
+                         'Decrement': ('Decrementar', 9),
+                         'AND': ('AND', 10),
+                         'OR': ('OR', 11),
+                         'NOT': ('NOT', 12)
+                         }
+
+        #dibujamos la caja de texto, se necesita el grid para pintarla
+        self.mensaje = Text(self.frame, width=25, height=20)
+        self.mensaje.place(x=10,y=20)
 
         self.button2 = Button(
             button2=Button(self.frame, text="Cargar Datos", command=self.mostrar).place(x=10, y=400))
@@ -98,9 +112,10 @@ class main:
         #self.openFile()
         self.app.mainloop()
 
+    #metodo para mostrar la cadena ingresada
     def mostrar(self):
-        print(str(self.texto))
-        self.map.create_text(500, 60, fill="black", font="Times 30", text=self.texto)
+        self.map.create_text(1000, 60, fill="black", font="Times 30", text=self.mensaje.get(1.0, "end-1c"))
+        self.separar_Cadena(self.mensaje.get(1.0, "end-1c"))
 
     # Pintar Lineas Mbr - ALU
     def pintar_mbr_alu(self):
@@ -129,10 +144,29 @@ class main:
         self.map.create_line(670, 170, 780, 170, width=4, fill="gold")
         self.map.create_line(780, 170, 780, 250, width=4, fill="gold")
         self.map.create_line(780, 250, 750, 250, width=4, fill="gold")
-    # Pintar lineas mar - dir cont
+    # Pintar lineas mar - dir memoria
     def pintar_mar_memoria(self):
         self.map.create_line(150, 30, 150, 10, width=4, fill="gold")
         self.map.create_line(150, 10, 870, 10, width=4, fill="gold")
         self.map.create_line(870, 10, 870, 350, width=4, fill="gold")
+
+
+    #Metodo para separar la cadena que ingresa
+    def separar_Cadena(self,texto):
+        listaCadena = texto.split('\n')
+        for e in listaCadena:
+            listaSimbolosCadena = e.split(' ')
+        #dic = dict(zip(listaAlfa, listaEqui))
+        """for p in listaEqui:
+            for e in listaAlfa:
+                if dic[e] is p:
+                    dic[e] = (p, 1)
+        for q in listaAlfa:
+            print(" alfabeto : ", q)"""
+        print(" Estos son los comandos ", listaSimbolosCadena)
+        print(" Esta es la cadena ", listaCadena)
+        print(" estos son los simbolos ", self.simbolos)
+        return 0
+
 
 main()
