@@ -1,10 +1,11 @@
-class pc:
+class Pc:
 
     def __init__(self):
         self.numeroInstruccion = 0
 
     def aumentarNumeroInstruccion(self):
-        return True
+        self.numeroInstruccion = self.numeroInstruccion+1
+
 
     def reiniciarNumeroInstruccion(self):
-        return True
+        self.numeroInstruccion = 0

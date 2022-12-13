@@ -1,7 +1,9 @@
-class ir:
+class Ir:
 
     def __init__(self):
-        self.intrucciones = ""
+        self.intruccion = ""
 
-    def buscarInstruccion(self, numero):
-        return True
+    def getInstruccion(self):
+        return self.intruccion
+    def setInstruccion(self, nueva):
+        self.instruccion = nueva
