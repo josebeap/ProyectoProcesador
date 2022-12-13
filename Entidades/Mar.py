@@ -1,8 +1,12 @@
-class mar:
+class Mar:
 
     def __init__(self):
-        self.listaDireccionesMemoria = []
+        self.direccionBuscada = 0
 
-    def buscarDireccion(self, numero):
-        return True
+    def getDireccion(self):
+        return self.direccionBuscada
+
+    def setDireccion(self, nueva):
+        self.direccionBuscada = nueva
+
 
