@@ -99,8 +99,8 @@ class main:
         self.app.mainloop()
 
     def mostrar(self):
-        print(str(self.texto))
-        self.map.create_text(500, 60, fill="black", font="Times 30", text=self.texto)
+        print(self.texto)
+        #self.map.create_text(500, 60, fill="black", font="Times 30", text=self.texto)
 
     # Pintar Lineas Mbr - ALU
     def pintar_mbr_alu(self):
