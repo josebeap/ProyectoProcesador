@@ -1,6 +1,5 @@
 from tkinter import *
 
-
 class main:
     def __init__(self):
         self.app = Tk()
@@ -132,7 +131,7 @@ class main:
         listaRetorno = self.separar_Cadena(self.mensaje.get(1.0, "end-1c"))
         #elf.map.create_text(1000, 60, fill="black", font="Times 10", text=listaRetorno)
 
-        print(self.texto)
+        print(self.mensaje)
         #self.map.create_text(500, 60, fill="black", font="Times 30", text=self.texto)
 
     # Pintar Lineas Mbr - ALU
