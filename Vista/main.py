@@ -2,91 +2,137 @@ from tkinter import *
 #from Sistema.Graph import Graph
 #from Sistema.Vertex import Vertex
 
-
 class main:
     def __init__(self):
         self.app = Tk()
         self.app.title('Procesador')
         self.app.state('zoomed')
 
-        #self.g = Graph()
-        #self.city = None
-
-
         self.alu = PhotoImage(file="../Imagenes/alu.png")
-        self.mar = PhotoImage(file="../Imagenes/MAR.png")
-        self.ir = PhotoImage(file="../Imagenes/IR.png")
-        self.mbr = PhotoImage(file="../Imagenes/MBR.png")
-        self.pc = PhotoImage(file="../Imagenes/PC.png")
-        self.uc = PhotoImage(file="../Imagenes/UC.png")
-        self.ac = PhotoImage(file="../Imagenes/AC.png")
-        self.banco = PhotoImage(file="../Imagenes/banco.png")
-        self.op1 = PhotoImage(file="../Imagenes/op.png")
-        #self.donkey = PhotoImage(file="../Images/donkey1.png")
-        #self.plane = PhotoImage(file="../Images/plane.png")
-        #self.car = PhotoImage(file="../Images/car.png")
-        #self.cityIcon = PhotoImage(file="../Images/city1.png")
-        #self.donkeyDead = PhotoImage(file="../Images/donkeyDead.png")
-        #self.backParker = PhotoImage(file="../Images/mochilero.png")
 
         self.frame = Frame(self.app)
         self.frame.pack(fill="both")
         self.frame.config(width=1360, height=760, bg='navy')
 
-
-        self.entry3 = StringVar()
-        self.textField3 = Entry(self.frame, textvariable=self.entry3).place(x=10, y=60)
+        self.texto = Text(self.frame, height=20, width=25).place(x=10, y=60)
 
         self.button2 = Button(
-            button2=Button(self.frame, text="Cargar Datos", command="self.drawElement").place(x=10, y=90))
-
-
-        self.button4 = Button(button4=Button(self.frame, text="Suma", command="self.transportSelection").place(x=10, y=200))
-        self.button5 = Button(button5=Button(self.frame, text="Resta", command="self.transportSelection2").place(x=10, y=230))
-        self.button6 = Button(button6=Button(self.frame, text="Multiplicación", command="self.transportSelection3").place(x=10, y=260))
-        self.button7 = Button(button7=Button(self.frame, text="División", command="self.timeTravel").place(x=10, y=290))
-        self.button8 = Button(button8=Button(self.frame, text="Comparar", command="self.timeTravel").place(x=10, y=320))
-
-
-
+            button2=Button(self.frame, text="Cargar Datos", command=self.mostrar).place(x=10, y=400))
 
         self.map = Canvas(self.frame, width=1360, height = 760, bg='grey')
         self.map.place(x=250, y=0)
 
-        #self.map.create_rectangle(530, 30, 600, 100, fill="gold")
-
+        #ALU
         self.map.create_image(10, 200, anchor=NW, image=self.alu)
         self.map.create_text(250, 530, fill="black", font="Times 30", text="ALU")
 
-        self.map.create_image(30, 30, anchor=NW, image=self.mar)
+        #MAR
+        self.map.create_rectangle(30, 30, 180, 120, fill="limegreen")
         self.map.create_text(100, 100, fill="black", font="Times 30", text="MAR")
 
-        self.map.create_image(350, 30, anchor=NW, image=self.ir)
+        #IR
+        self.map.create_rectangle(350, 30, 500, 120, fill="firebrick1")
         self.map.create_text(425, 100, fill="black", font="Times 30", text="IR")
 
-        self.map.create_image(30, 610, anchor=NW, image=self.mbr)
+        #MRB
+        self.map.create_rectangle(30, 610, 180, 700, fill="cyan2")
         self.map.create_text(100, 680, fill="black", font="Times 30", text="MBR")
 
-        self.map.create_image(800, 200, anchor=NW, image=self.pc)
-        self.map.create_text(870, 270, fill="black", font="Times 30", text="PC")
+        #PC
+        self.map.create_rectangle(600, 200, 750, 300, fill="mediumblue")
+        self.map.create_text(670, 270, fill="black", font="Times 30", text="PC")
 
-        self.map.create_image(800, 350, anchor=NW, image=self.uc)
-        self.map.create_text(870, 420, fill="black", font="Times 30", text="UC")
+        #UC
+        self.map.create_rectangle(600, 350, 800, 600, fill="tomato3")
+        self.map.create_rectangle(620, 360, 780, 400, fill="darkorange1")
+        self.map.create_text(700, 410, fill="black", font="Times 20", text="Decodificador")
+        self.map.create_text(670, 550, fill="black", font="Times 30", text="UC")
 
-        self.map.create_image(800, 500, anchor=NW, image=self.ac)
-        self.map.create_text(870, 570, fill="black", font="Times 30", text="AC")
+        #Resultado
+        self.map.create_rectangle(900, 10, 1100, 250, fill="gold")
+        self.map.create_text(1000, 30, fill="black", font="Times 30", text="Resultado: ")
 
-        self.map.create_image(470, 350, anchor=NW, image=self.banco)
-        self.map.create_text(540, 570, fill="black", font="Times 30", text="Banco Registros")
+        #Memoria
+        self.map.create_rectangle(850, 350, 1050, 700, fill="gold")
+        self.map.create_text(970, 330, fill="black", font="Times 30", text="MEMORIA")
+        self.map.create_text(950, 370, fill="black", font="Times 30", text="Dir    Cont")
+        self.map.create_line(850, 400, 1050, 400, width=8, fill="black")
+        self.map.create_line(935, 350, 935, 700, width=8, fill="black")
 
-        self.map.create_image(20, 190, anchor=NW, image=self.op1)
-        self.map.create_text(50, 220, fill="black", font="Times 30", text="OP1")
+        #Datos que ingresan a la alu
+        self.map.create_rectangle(10, 190, 150, 250, fill="deeppink")
+        self.map.create_rectangle(340, 190, 480, 250, fill="yellow2")
 
-        self.map.create_image(350, 190, anchor=NW, image=self.op1)
-        self.map.create_text(380, 220, fill="black", font="Times 30", text="OP2")
+        #Lineas Mbr - ALU
+        self.map.create_line(300, 490, 300, 660, width=8, fill="black")
+        self.map.create_line(300, 660, 180, 660, width=8, fill="black")
+
+        #Lineas Mbr - memoria
+        self.map.create_line(180, 690, 850, 690, width=8, fill="black")
+
+        #Lineas uc - mar
+        self.map.create_line(600, 420, 550, 420, width=8, fill="black")
+        self.map.create_line(550, 420, 550, 150, width=8, fill="black")
+        self.map.create_line(550, 150, 100, 150, width=8, fill="black")
+        self.map.create_line(100, 150, 100, 120, width=8, fill="black")
+
+        #Lineas uc - ir
+        self.map.create_line(600, 380, 580, 380, width=8, fill="black")
+        self.map.create_line(580, 380, 580, 100, width=8, fill="black")
+        self.map.create_line(580, 100, 500, 100, width=8, fill="black")
+
+        #Lineas uc - pc
+        self.map.create_line(650, 300, 650, 350, width=8, fill="black")
+
+        #Lineas pc a pc
+        self.map.create_line(670, 200, 670, 170, width=8, fill="black")
+        self.map.create_line(670, 170, 780, 170, width=8, fill="black")
+        self.map.create_line(780, 170, 780, 250, width=8, fill="black")
+        self.map.create_line(780, 250, 750, 250, width=8, fill="black")
+
+        #lineas mar - dir cont
+        self.map.create_line(150, 30, 150, 10, width=8, fill="black")
+        self.map.create_line(150, 10, 870, 10, width=8, fill="black")
+        self.map.create_line(870, 10, 870, 350, width=8, fill="black")
 
         #self.openFile()
         self.app.mainloop()
 
+    def mostrar(self):
+        print(str(self.texto))
+        self.map.create_text(500, 60, fill="black", font="Times 30", text=self.texto)
+
+    # Pintar Lineas Mbr - ALU
+    def pintar_mbr_alu(self):
+        self.map.create_line(300, 490, 300, 660, width=4, fill="gold")
+        self.map.create_line(300, 660, 180, 660, width=4, fill="gold")
+    # Pintar Lineas Mbr - memoria
+    def pintar_mbr_memoria(self):
+        self.map.create_line(180, 690, 850, 690, width=4, fill="gold")
+    # Pintar Lineas uc - mar
+    def pintar_uc_mar(self):
+        self.map.create_line(600, 420, 550, 420, width=4, fill="gold")
+        self.map.create_line(550, 420, 550, 150, width=4, fill="gold")
+        self.map.create_line(550, 150, 100, 150, width=4, fill="gold")
+        self.map.create_line(100, 150, 100, 120, width=4, fill="gold")
+    # Pintar Lineas uc - ir
+    def pintar_uc_ir(self):
+        self.map.create_line(600, 380, 580, 380, width=4, fill="gold")
+        self.map.create_line(580, 380, 580, 100, width=4, fill="gold")
+        self.map.create_line(580, 100, 500, 100, width=4, fill="gold")
+    # Pintar Lineas uc - pc
+    def pintar_uc_pc(self):
+        self.map.create_line(650, 300, 650, 350, width=4, fill="gold")
+    # Pintar Lineas pc a pc
+    def pintar_pc_pc(self):
+        self.map.create_line(670, 200, 670, 170, width=4, fill="gold")
+        self.map.create_line(670, 170, 780, 170, width=4, fill="gold")
+        self.map.create_line(780, 170, 780, 250, width=4, fill="gold")
+        self.map.create_line(780, 250, 750, 250, width=4, fill="gold")
+    # Pintar lineas mar - dir cont
+    def pintar_mar_memoria(self):
+        self.map.create_line(150, 30, 150, 10, width=4, fill="gold")
+        self.map.create_line(150, 10, 870, 10, width=4, fill="gold")
+        self.map.create_line(870, 10, 870, 350, width=4, fill="gold")
 
 main()
