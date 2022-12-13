@@ -14,13 +14,30 @@ class main:
         self.frame.pack(fill="both")
         self.frame.config(width=1360, height=760, bg='navy')
 
-        self.texto = Text(self.frame, height=20, width=25).place(x=10, y=60)
+        self.mensaje = Text(self.frame, width=25, height=20)
+        self.mensaje.place(x=10, y=20)
+
+        self.simbolos = {'Input': (1),
+                         'Output': (2),
+                         'Compare': (3),
+                         'Clear': (4),
+                         'Set': (5),
+                         'Push': (6),
+                         'Pop': (7),
+                         'Incremet': (8),
+                         'Decrement': (9),
+                         'AND': (10),
+                         'OR': (11),
+                         'NOT': (12)
+                         }
 
         self.button2 = Button(
             button2=Button(self.frame, text="Cargar Datos", command=self.mostrar).place(x=10, y=400))
 
         self.map = Canvas(self.frame, width=1360, height = 760, bg='grey')
         self.map.place(x=250, y=0)
+
+        self.map.create_text(100, 550, fill="black", font="Times 20", text="Ejemplo: \n Push A \n Push B")
 
         #ALU
         self.map.create_image(10, 200, anchor=NW, image=self.alu)
@@ -90,7 +107,7 @@ class main:
         self.map.create_line(780, 170, 780, 250, width=8, fill="black")
         self.map.create_line(780, 250, 750, 250, width=8, fill="black")
 
-        #lineas mar - dir cont
+        #lineas mar - memoria
         self.map.create_line(150, 30, 150, 10, width=8, fill="black")
         self.map.create_line(150, 10, 870, 10, width=8, fill="black")
         self.map.create_line(870, 10, 870, 350, width=8, fill="black")
@@ -99,8 +116,10 @@ class main:
         self.app.mainloop()
 
     def mostrar(self):
-        print(str(self.texto))
-        self.map.create_text(500, 60, fill="black", font="Times 30", text=self.texto)
+        self.map.create_text(1000, 60, fill="black", font="Times 10", text=self.mensaje.get(1.0, "end-1c"))
+        listaRetorno = self.separar_Cadena(self.mensaje.get(1.0, "end-1c"))
+        #elf.map.create_text(1000, 60, fill="black", font="Times 10", text=listaRetorno)
+
 
     # Pintar Lineas Mbr - ALU
     def pintar_mbr_alu(self):
@@ -134,5 +153,21 @@ class main:
         self.map.create_line(150, 30, 150, 10, width=4, fill="gold")
         self.map.create_line(150, 10, 870, 10, width=4, fill="gold")
         self.map.create_line(870, 10, 870, 350, width=4, fill="gold")
+
+    #Metodo para separar la cadena que ingresa
+    def separar_Cadena(self,texto):
+        listaSimbolosCadena = []
+        listaCadena = texto.split('\n')
+        for e in listaCadena:
+            aux = e.split(' ')
+            listaSimbolosCadena.append(aux)
+        for f in listaSimbolosCadena:
+            print("examino la lista de los simbolos")
+            if str(f[0]) in str(self.simbolos.keys()):
+                print("si estoy : ", f[0])
+        print(" Estos son los simbolos cadena ", listaSimbolosCadena)
+        print(" Esta es la cadena ", listaCadena)
+        print(" Estos son los simbolos ", self.simbolos)
+        return listaCadena
 
 main()
