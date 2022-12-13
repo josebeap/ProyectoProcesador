@@ -1,6 +1,4 @@
 from tkinter import *
-#from Sistema.Graph import Graph
-#from Sistema.Vertex import Vertex
 
 
 class main:
@@ -127,6 +125,7 @@ class main:
         # self.openFile()
         self.app.mainloop()
 
+    # metodo para mostrar la cadena ingresada
     def mostrar(self):
         self.map.create_text(
             1000, 60, fill="black", font="Times 10", text=self.mensaje.get(1.0, "end-1c"))
