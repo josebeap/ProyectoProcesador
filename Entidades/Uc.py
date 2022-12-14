@@ -38,7 +38,9 @@ class Uc:
         self.memoriaPrincipal.cargarRegistro()
         self.registroInstrucciones.setInstruccion(self.memoriaPrincipal.getMbr().getDato())
         self.decodificar()
+        print("Esta es la instruccion", self.decodificador)
         self.ejecutarInstruccion(self.decodificador)
+        print("Esta es la pila", self.pilaOperandos)
 
     def ejecucion(self):
         self.captacion()
@@ -49,8 +51,10 @@ class Uc:
 #Asigna la funcion a ejecutar
     def decodificar(self):
         nueva = self.registroInstrucciones.getInstruccion()
+        print("Esta es la IR", self.registroInstrucciones.getInstruccion())
         auxiliar = nueva.split(' ')
         instruccion = auxiliar[0]
+        print("Esta es la isntruccion al dividir", instruccion)
         self.comprobarFuncion(instruccion)
 
 #comprueba lka funcion solicitada si es posible o no
