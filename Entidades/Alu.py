@@ -3,7 +3,7 @@ class Alu:
     def __init__(self):
         self.operando1 = 0
         self.operando2 = 0
-        self.operacion = 0
+        self.operacion = "string"
 
 
     def Operar(self,simbolo):
@@ -21,5 +21,8 @@ class Alu:
         self.operando1 = numero
     def setOperando2(self,numero):
         self.operando2 = numero
+
+    def setOperacion(self,operacion):
+        self.operacion = operacion
     def getResultado(self):
         return self.operacion
