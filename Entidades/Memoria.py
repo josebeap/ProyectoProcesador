@@ -44,9 +44,9 @@ class Memoria:
         direccion = self.buscarDireccion()
         self.cargarMBR(direccion)
 
-
     def getMbr(self):
         return self.mbr
+
     def getMar(self):
         return self.mar
 

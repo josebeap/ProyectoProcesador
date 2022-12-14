@@ -35,6 +35,13 @@ class Uc:
         self.memoriaPrincipal.cargarRegistro()
         self.registroInstrucciones.setInstruccion(self.memoriaPrincipal.getMbr().getDato())
         self.decodificar()
+        self.ejecutarInstruccion(self.decodificador)
+
+    def ejecucion(self):
+        self.captacion()
+        self.alu.operar()
+
+
 
 #Asigna la funcion a ejecutar
     def decodificar(self):
@@ -43,12 +50,10 @@ class Uc:
         instruccion = auxiliar[0]
         self.comprobarFuncion(instruccion)
 
-
-
 #comprueba lka funcion solicitada si es posible o no
     def comprobarFuncion(self,funcion):
         if(funcion in self.operacionesPosibles):
-            self.decodificador = self.operacionesPosibles[funcion]
+            self.decodificador = funcion
         else:
             self.decodificador = None
 
@@ -60,15 +65,15 @@ class Uc:
             case "OUTPUT":
                 print(self.pilaOperandos.pop())
             case "COMPARE":
-                self.enviarAlu(self.decodificador)
+                self.enviarAlu('==')
             case "CLEAR":
                 self.pilaOperandos=[]
             case "POP":
                 print(self.pilaOperandos.pop())
             case "INCREMENT":
-                self.enviarAlu(1, "+")
+                self.enviarAlu(1, "+1")
             case "DECREMENT":
-                self.enviarAlu(1, "-")
+                self.enviarAlu(1, "-1")
             case "AND":
                 self.enviarAlu("and")
             case "OR":
