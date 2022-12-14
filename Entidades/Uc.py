@@ -1,4 +1,4 @@
-import Ir, Pc, Memoria, Alu
+from Entidades import Ir, Pc, Memoria, Alu
 class Uc:
 
     def __init__(self):

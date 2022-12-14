@@ -1,11 +1,12 @@
 from tkinter import *
+from Controlador import Controlador
 
 class main:
     def __init__(self):
         self.app = Tk()
         self.app.title('Procesador')
         self.app.state('zoomed')
-
+        self.controlador = Controlador
         self.alu = PhotoImage(file="../Imagenes/alu.png")
 
         self.frame = Frame(self.app)
@@ -30,7 +31,7 @@ class main:
                          }
 
         self.button2 = Button(
-            button2=Button(self.frame, text="Cargar Datos", command=self.mostrar).place(x=10, y=400))
+            button2=Button(self.frame, text="Cargar Datos", command=self.cargarTodo).place(x=10, y=400))
 
         self.map = Canvas(self.frame, width=1360, height=760, bg='grey')
         self.map.place(x=250, y=0)
@@ -130,7 +131,7 @@ class main:
         self.map.create_text(
             1000, 60, fill="black", font="Times 10", text=self.mensaje.get(1.0, "end-1c"))
         listaRetorno = self.separar_Cadena(self.mensaje.get(1.0, "end-1c"))
-        self.mostrarDatosMemoria(listaRetorno)
+        #self.mostrarDatosMemoria(listaRetorno)
 
     #Pintar datos en la memoria
     def mostrarDatosMemoria(self,listaRetorno):
@@ -194,7 +195,12 @@ class main:
         print(" Estos son los simbolos cadena ", listaSimbolosCadena)
         print(" Esta es la cadena ", listaCadena)
         print(" Estos son los simbolos ", self.simbolos)
-        return listaSimbolosCadena
+        return listaCadena
+
+    def cargarTodo(self):
+        lista = []
+        lista = self.separar_Cadena(self.mensaje.get(1.0, "end-1c"))
+        self.controlador.Controlador.cargarIntruccionesVista(self.controlador, lista)
 
 
 main()

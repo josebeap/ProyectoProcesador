@@ -1,5 +1,5 @@
 
-import Mar, Mbr
+from Entidades import Mar, Mbr
 class Memoria:
 
     def __init__(self):
