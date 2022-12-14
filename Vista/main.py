@@ -29,6 +29,7 @@ class main:
                          'OR': (11),
                          'NOT': (12)
                          }
+        self.listaSimbolosCadena = []
 
         self.button2 = Button(
             button2=Button(self.frame, text="Cargar Datos", command=self.cargarTodo).place(x=10, y=400))
@@ -122,6 +123,14 @@ class main:
         self.map.create_line(150, 10, 870, 10, width=8, fill="black")
         self.map.create_line(870, 10, 870, 350, width=8, fill="black")
 
+        # Lineas Mbr - uc
+        self.map.create_line(650, 600, 650, 675, width=8, fill="black")
+        self.map.create_line(650, 675, 180, 675, width=8, fill="black")
+
+        # Lineas UC - ALU
+        self.map.create_line(350, 490, 350, 550, width=8, fill="black")
+        self.map.create_line(350, 550, 600, 550, width=8, fill="black")
+
         # self.openFile()
         print("Push a Pop b Pop c Push a Push b")
         self.app.mainloop()
@@ -136,63 +145,67 @@ class main:
     #Pintar datos en la memoria
     def mostrarDatosMemoria(self,listaRetorno):
         aux = 0
+        aux2 = 0
         for e in listaRetorno:
             if str(e[0]) in str(self.simbolos.keys()):
                 self.map.create_text(1000, 420+aux, fill="black", font="Times 10", text=e[0])
-                self.map.create_text(900, 420+aux, fill="black", font="Times 10", text=self.simbolos[e[0]])
+                self.map.create_text(900, 420+aux, fill="black", font="Times 10", text=aux2)
                 aux+=15
+                aux2+=1
 
     # Pintar Lineas Mbr - ALU
     def pintar_mbr_alu(self):
         self.map.create_line(300, 490, 300, 660, width=4, fill="gold")
         self.map.create_line(300, 660, 180, 660, width=4, fill="gold")
     # Pintar Lineas Mbr - memoria
-
     def pintar_mbr_memoria(self):
         self.map.create_line(180, 690, 850, 690, width=4, fill="gold")
     # Pintar Lineas uc - mar
-
     def pintar_uc_mar(self):
         self.map.create_line(600, 420, 550, 420, width=4, fill="gold")
         self.map.create_line(550, 420, 550, 150, width=4, fill="gold")
         self.map.create_line(550, 150, 100, 150, width=4, fill="gold")
         self.map.create_line(100, 150, 100, 120, width=4, fill="gold")
     # Pintar Lineas uc - ir
-
     def pintar_uc_ir(self):
         self.map.create_line(600, 380, 580, 380, width=4, fill="gold")
         self.map.create_line(580, 380, 580, 100, width=4, fill="gold")
         self.map.create_line(580, 100, 500, 100, width=4, fill="gold")
     # Pintar Lineas uc - pc
-
     def pintar_uc_pc(self):
         self.map.create_line(650, 300, 650, 350, width=4, fill="gold")
     # Pintar Lineas pc a pc
-
     def pintar_pc_pc(self):
         self.map.create_line(670, 200, 670, 170, width=4, fill="gold")
         self.map.create_line(670, 170, 780, 170, width=4, fill="gold")
         self.map.create_line(780, 170, 780, 250, width=4, fill="gold")
         self.map.create_line(780, 250, 750, 250, width=4, fill="gold")
     # Pintar lineas mar - dir cont
-
     def pintar_mar_memoria(self):
         self.map.create_line(150, 30, 150, 10, width=4, fill="gold")
         self.map.create_line(150, 10, 870, 10, width=4, fill="gold")
         self.map.create_line(870, 10, 870, 350, width=4, fill="gold")
+    # Lineas Mbr - uc
+    def píntar_mbr_uc(self):
+        self.map.create_line(650, 600, 650, 675, width=4, fill="gold")
+        self.map.create_line(650, 675, 180, 675, width=4, fill="gold")
+
+    # Lineas UC - ALU
+    def pintar_uc_alu(self):
+        self.map.create_line(350, 490, 350, 550, width=4, fill="gold")
+        self.map.create_line(350, 550, 600, 550, width=4, fill="gold")
 
     # Metodo para separar la cadena que ingresa
     def separar_Cadena(self, texto):
-        listaSimbolosCadena = []
         listaCadena = texto.split('\n')
         for e in listaCadena:
             aux = e.split(' ')
-            listaSimbolosCadena.append(aux)
-        for f in listaSimbolosCadena:
+            self.listaSimbolosCadena.append(aux)
+        for f in self.listaSimbolosCadena:
             print("examino la lista de los simbolos")
             if str(f[0]) in str(self.simbolos.keys()):
                 print("si estoy : ", f[0])
-        print(" Estos son los simbolos cadena ", listaSimbolosCadena)
+        print(" Estos son los simbolos cadena ", self.listaSimbolosCadena)
         print(" Esta es la cadena ", listaCadena)
         print(" Estos son los simbolos ", self.simbolos)
         return listaCadena
@@ -200,7 +213,9 @@ class main:
     def cargarTodo(self):
         lista = []
         lista = self.separar_Cadena(self.mensaje.get(1.0, "end-1c"))
+        self.mostrarDatosMemoria(self.listaSimbolosCadena)
         self.controlador.cargarIntruccionesVista(lista)
+
 
 
 main()
