@@ -34,7 +34,7 @@ class Uc:
 #contador arranca en cero y empieza la primera
 #busqueda de memoria
     def captacion(self):
-        while(self.contadorPrograma.getNumeroInstr() < self.memoriaPrincipal.getLongitudPendientes()):
+        #while(self.contadorPrograma.getNumeroInstr() < self.memoriaPrincipal.getLongitudPendientes()):
             self.memoriaPrincipal.cargarMar(self.contadorPrograma.getNumeroInstr())
             self.contadorPrograma.aumentarNumeroInstruccion()
             self.memoriaPrincipal.cargarRegistro()
@@ -42,14 +42,21 @@ class Uc:
             self.decodificar()
             #print("Esta es la instruccion", self.decodificador)
             self.ejecutarInstruccion(self.decodificador)
+
             #print("Esta es la pila", self.pilaOperandos)
 
+
     def ejecucion(self):
-        self.captacion()
-        #bANDERA uc - Alu
-        self.alu.operar()
+        while (self.contadorPrograma.getNumeroInstr() < self.memoriaPrincipal.getLongitudPendientes()):
+            self.captacion()
+            #bANDERA uc - Alu
+            self.alu.operar()
+            self.comprobarPendientes()
 
-
+    def comprobarPendientes(self):
+        if(self.alu.getResultado()!=None):
+            self.pilaOperandos.append(self.alu.getResultado())
+            self.alu.setResultado()
 
 #Asigna la funcion a ejecutar
     def decodificar(self):
@@ -104,12 +111,12 @@ class Uc:
         aux = dato.split(' ')
         return aux[1]
     def enviarAlu1(self,operacion):
-        self.alu.setOperando1(self.pilaOperandos.pop())
-        self.alu.setOperando2(self.pilaOperandos.pop())
+        self.alu.setOperando1(str(self.pilaOperandos.pop()))
+        self.alu.setOperando2(str(self.pilaOperandos.pop()))
         self.alu.setOperacion(operacion)
 
     def enviarAlu2(self,operando2,operacion):
-        self.alu.setOperando1(self.pilaOperandos.pop())
-        self.alu.setOperando2(operando2)
+        self.alu.setOperando1(str(self.pilaOperandos.pop()))
+        self.alu.setOperando2(str(operando2))
         self.alu.setOperacion(operacion)
 

@@ -1,3 +1,5 @@
+import math
+
 class Alu:
     def __init__(self):
         self.operando1 = []
@@ -7,7 +9,7 @@ class Alu:
 
 #!!!!! Casos especiales, operaciones logicas and, or, not
     def operar(self):
-        if(self.operando1 != [] or self.operando2 != []):
+        if(self.operando1 != [] and self.operando2 != []):
             if(self.validarOperandoDigito(self.operando1[0]) and
                     self.validarOperandoDigito(self.operando2[0])):
 
@@ -15,17 +17,17 @@ class Alu:
                     case '==':
                         self.resultado.append(int(self.operando1[0]) == int(self.operando2[0]))
                     case "+1":
-                        self.resultado.append(int(self.operando1[0]) + 1)
+                        self.resultado.append(math.trunc(int(self.operando1[0]) + 1))
                     case "-1":
-                        self.resultado.append(int(self.operando1[0]) + 1)
+                        self.resultado.append(math.trunc(int(self.operando1[0]) + 1))
                     case "+":
-                        self.resultado.append(int(self.operando1[0]) + int(self.operando2[0]))
+                        self.resultado.append(math.trunc((int(self.operando1[0]) + int(self.operando2[0]))))
                     case "-":
-                        self.resultado.append(int(self.operando1[0]) - int(self.operando2[0]))
+                        self.resultado.append(math.trunc((int(self.operando1[0]) - int(self.operando2[0]))))
                     case "/":
-                        self.resultado.append(int(self.operando1[0]) / int(self.operando2[0]))
+                        self.resultado.append(math.trunc((int(self.operando1[0]) / int(self.operando2[0]))))
                     case "*":
-                        self.resultado.append(int(self.operando1[0]) * int(self.operando2[0]))
+                        self.resultado.append(math.trunc((int(self.operando1[0]) * int(self.operando2[0]))))
             else:
                 match self.operacion:
                     case '==':
@@ -51,3 +53,9 @@ class Alu:
             return self.resultado[0]
         else:
             return None
+
+    def setResultado(self):
+        self.resultado = []
+        self.operando2 = []
+        self.operando1 = []
+        self.operacion = ""
