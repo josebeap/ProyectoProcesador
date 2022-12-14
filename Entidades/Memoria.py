@@ -11,8 +11,8 @@ class Memoria:
 #Retorna la clave(int) de la direccion cargada en la mar de la memoria
 #JOSE CREE Q NECESITAMOS OTRO RETURN
     def buscarDireccion(self):
+        cont = 0
         for i in self.DirCont:
-            cont = 0
             if cont > len(self.DirCont):
                 print("El dato buscado no existe")
                 break
@@ -53,5 +53,7 @@ class Memoria:
 
     def getMar(self):
         return self.mar
+    def getLongitudPendientes(self):
+        return len(self.DirCont)
 
 

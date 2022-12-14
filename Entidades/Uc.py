@@ -34,13 +34,15 @@ class Uc:
 #contador arranca en cero y empieza la primera
 #busqueda de memoria
     def captacion(self):
-        self.memoriaPrincipal.cargarMar(self.contadorPrograma.getNumeroInstr())
-        self.memoriaPrincipal.cargarRegistro()
-        self.registroInstrucciones.setInstruccion(self.memoriaPrincipal.getMbr().getDato())
-        self.decodificar()
-        print("Esta es la instruccion", self.decodificador)
-        self.ejecutarInstruccion(self.decodificador)
-        print("Esta es la pila", self.pilaOperandos)
+        while(self.contadorPrograma.getNumeroInstr() < self.memoriaPrincipal.getLongitudPendientes()):
+            self.memoriaPrincipal.cargarMar(self.contadorPrograma.getNumeroInstr())
+            self.contadorPrograma.aumentarNumeroInstruccion()
+            self.memoriaPrincipal.cargarRegistro()
+            self.registroInstrucciones.setInstruccion(self.memoriaPrincipal.getMbr().getDato())
+            self.decodificar()
+            #print("Esta es la instruccion", self.decodificador)
+            self.ejecutarInstruccion(self.decodificador)
+            #print("Esta es la pila", self.pilaOperandos)
 
     def ejecucion(self):
         self.captacion()
@@ -78,34 +80,34 @@ class Uc:
             case "POP":
                 print(self.pilaOperandos.pop())
             case "INCREMENT":
-                self.enviarAlu("1", "+1")
+                self.enviarAlu2("1", "+1")
             case "DECREMENT":
-                self.enviarAlu("1", "-1")
+                self.enviarAlu2("1", "-1")
             case "AND":
-                self.enviarAlu("and")
+                self.enviarAlu1("and")
             case "OR":
-                self.enviarAlu("or")
+                self.enviarAlu1("or")
             case "NOT":
-                self.enviarAlu("-1","*")
+                self.enviarAlu1("-1","*")
             case "SUM":
-                self.enviarAlu("+")
+                self.enviarAlu1("+")
             case "RES":
-                self.enviarAlu("-")
+                self.enviarAlu1("-")
             case "DIV":
-                self.enviarAlu("/")
+                self.enviarAlu1("/")
             case "MPY":
-                self.enviarAlu("*")
+                self.enviarAlu1("*")
 
 
     def obtenerOperando(self,dato):
         aux = dato.split(' ')
         return aux[1]
-    def enviarAlu(self,operacion):
+    def enviarAlu1(self,operacion):
         self.alu.setOperando1(self.pilaOperandos.pop())
         self.alu.setOperando2(self.pilaOperandos.pop())
         self.alu.setOperacion(operacion)
 
-    def enviarAlu(self,operando2,operacion):
+    def enviarAlu2(self,operando2,operacion):
         self.alu.setOperando1(self.pilaOperandos.pop())
         self.alu.setOperando2(operando2)
         self.alu.setOperacion(operacion)

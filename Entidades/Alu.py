@@ -2,7 +2,7 @@ class Alu:
     def __init__(self):
         self.operando1 = []
         self.operando2 = []
-        self.operacion = "string"
+        self.operacion = ""
         self.resultado = []
 
 #!!!!! Casos especiales, operaciones logicas and, or, not
@@ -13,19 +13,19 @@ class Alu:
 
                 match self.operacion:
                     case '==':
-                        self.resultado.append(self.operando1[0] == self.operando2[0])
+                        self.resultado.append(int(self.operando1[0]) == int(self.operando2[0]))
                     case "+1":
-                        self.resultado.append(self.operando1[0] + 1)
+                        self.resultado.append(int(self.operando1[0]) + 1)
                     case "-1":
-                        self.resultado.append(self.operando1[0] + 1)
+                        self.resultado.append(int(self.operando1[0]) + 1)
                     case "+":
-                        self.resultado.append(self.operando1[0] + self.operando2[0])
+                        self.resultado.append(int(self.operando1[0]) + int(self.operando2[0]))
                     case "-":
-                        self.resultado.append(self.operando1[0] - self.operando2[0])
+                        self.resultado.append(int(self.operando1[0]) - int(self.operando2[0]))
                     case "/":
-                        self.resultado.append(self.operando1[0] / self.operando2[0])
+                        self.resultado.append(int(self.operando1[0]) / int(self.operando2[0]))
                     case "*":
-                        self.resultado.append(self.operando1[0] * self.operando2[0])
+                        self.resultado.append(int(self.operando1[0]) * int(self.operando2[0]))
             else:
                 match self.operacion:
                     case '==':
