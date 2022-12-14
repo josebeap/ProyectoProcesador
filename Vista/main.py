@@ -122,6 +122,7 @@ class main:
         self.map.create_line(870, 10, 870, 350, width=8, fill="black")
 
         # self.openFile()
+        print("Push a Pop b Pop c Push a Push b")
         self.app.mainloop()
 
     # metodo para mostrar la cadena ingresada
@@ -129,10 +130,16 @@ class main:
         self.map.create_text(
             1000, 60, fill="black", font="Times 10", text=self.mensaje.get(1.0, "end-1c"))
         listaRetorno = self.separar_Cadena(self.mensaje.get(1.0, "end-1c"))
-        #elf.map.create_text(1000, 60, fill="black", font="Times 10", text=listaRetorno)
+        self.mostrarDatosMemoria(listaRetorno)
 
-        print(self.mensaje)
-        #self.map.create_text(500, 60, fill="black", font="Times 30", text=self.texto)
+    #Pintar datos en la memoria
+    def mostrarDatosMemoria(self,listaRetorno):
+        aux = 0
+        for e in listaRetorno:
+            if str(e[0]) in str(self.simbolos.keys()):
+                self.map.create_text(1000, 420+aux, fill="black", font="Times 10", text=e[0])
+                self.map.create_text(900, 420+aux, fill="black", font="Times 10", text=self.simbolos[e[0]])
+                aux+=15
 
     # Pintar Lineas Mbr - ALU
     def pintar_mbr_alu(self):
@@ -187,7 +194,7 @@ class main:
         print(" Estos son los simbolos cadena ", listaSimbolosCadena)
         print(" Esta es la cadena ", listaCadena)
         print(" Estos son los simbolos ", self.simbolos)
-        return listaCadena
+        return listaSimbolosCadena
 
 
 main()
