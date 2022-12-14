@@ -1,12 +1,12 @@
 from tkinter import *
-from Controlador import Controlador
+from Controlador.Controlador import Controlador
 
 class main:
     def __init__(self):
         self.app = Tk()
         self.app.title('Procesador')
         self.app.state('zoomed')
-        self.controlador = Controlador
+        self.controlador = Controlador()
         self.alu = PhotoImage(file="../Imagenes/alu.png")
 
         self.frame = Frame(self.app)
@@ -200,7 +200,7 @@ class main:
     def cargarTodo(self):
         lista = []
         lista = self.separar_Cadena(self.mensaje.get(1.0, "end-1c"))
-        self.controlador.Controlador.cargarIntruccionesVista(self.controlador, lista)
+        self.controlador.cargarIntruccionesVista(lista)
 
 
 main()

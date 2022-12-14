@@ -1,11 +1,12 @@
+from Entidades.Mar import Mar
+from Entidades.Mbr import Mbr
 
-from Entidades import Mar, Mbr
 class Memoria:
 
     def __init__(self):
         self.DirCont = {}
-        self.mar = Mar
-        self.mbr = Mbr
+        self.mar = Mar()
+        self.mbr = Mbr()
 
 #Retorna la clave(int) de la direccion cargada en la mar de la memoria
 #JOSE CREE Q NECESITAMOS OTRO RETURN
@@ -28,6 +29,7 @@ class Memoria:
 #carga la mar con la posicion a buscar
     def cargarMar(self,posicion):
         self.mar.setDireccion(posicion)
+        print("Esta es la Mar", self.mar.getDireccion())
 
 #Carga las instruciones solicitadas a la memoria principal
     def cargarInstruccionesDiccionario(self, lista):
@@ -38,11 +40,13 @@ class Memoria:
             self.DirCont[cont] = i
             cont = cont + 1
             longitudLista = longitudLista - 1
+        print("Este es el diccionario de memoria", self.DirCont)
 
 #Envia el resgistro de instruccion completo para ser decodificado por la UC
     def cargarRegistro(self):
         direccion = self.buscarDireccion()
         self.cargarMBR(direccion)
+        print("Esta es la MBR: ", self.mbr.getDato())
 
     def getMbr(self):
         return self.mbr

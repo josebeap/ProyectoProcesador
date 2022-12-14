@@ -1,4 +1,3 @@
-
 class Alu:
     def __init__(self):
         self.operando1 = []
@@ -8,32 +7,34 @@ class Alu:
 
 #!!!!! Casos especiales, operaciones logicas and, or, not
     def operar(self):
-        if(self.validarOperandoDigito(self.operando1) and
-                self.validarOperandoDigito(self.operando2)):
+        if(self.operando1 != [] or self.operando2 != []):
+            if(self.validarOperandoDigito(self.operando1[0]) and
+                    self.validarOperandoDigito(self.operando2[0])):
 
-            match self.operacion:
-                case '==':
-                    self.resultado.append(self.operando1[0] == self.operando2[0])
-                case "+1":
-                    self.resultado.append(self.operando1[0] + 1)
-                case "-1":
-                    self.resultado.append(self.operando1[0] + 1)
-                case "+":
-                    self.resultado.append(self.operando1[0] + self.operando2[0])
-                case "-":
-                    self.resultado.append(self.operando1[0] - self.operando2[0])
-                case "/":
-                    self.resultado.append(self.operando1[0] / self.operando2[0])
-                case "*":
-                    self.resultado.append(self.operando1[0] * self.operando2[0])
-        else:
-            match self.operacion:
-                case '==':
-                    self.resultado.append(self.operando1[0] == self.operando2[0])
-                case "+":
-                    self.resultado.append(self.operando1[0] + self.operando2[0])
+                match self.operacion:
+                    case '==':
+                        self.resultado.append(self.operando1[0] == self.operando2[0])
+                    case "+1":
+                        self.resultado.append(self.operando1[0] + 1)
+                    case "-1":
+                        self.resultado.append(self.operando1[0] + 1)
+                    case "+":
+                        self.resultado.append(self.operando1[0] + self.operando2[0])
+                    case "-":
+                        self.resultado.append(self.operando1[0] - self.operando2[0])
+                    case "/":
+                        self.resultado.append(self.operando1[0] / self.operando2[0])
+                    case "*":
+                        self.resultado.append(self.operando1[0] * self.operando2[0])
+            else:
+                match self.operacion:
+                    case '==':
+                        self.resultado.append(self.operando1[0] == self.operando2[0])
+                    case "+":
+                        self.resultado.append(self.operando1[0] + self.operando2[0])
 
     def validarOperandoDigito(self, operando):
+        print(operando)
         return operando.isdigit()
 
     def setOperando1(self,numero):
@@ -46,4 +47,7 @@ class Alu:
         self.operacion = operacion
 
     def getResultado(self):
-        return self.resultado[0]
+        if(self.resultado != []):
+            return self.resultado[0]
+        else:
+            return None

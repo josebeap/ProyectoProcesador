@@ -1,12 +1,15 @@
-from Entidades import Ir, Pc, Memoria, Alu
+from Entidades.Ir import Ir
+from Entidades.Pc import Pc
+from Entidades.Memoria import Memoria
+from Entidades.Alu import Alu
 class Uc:
 
     def __init__(self):
         self.pilaOperandos = []
-        self.registroInstrucciones = Ir
-        self.contadorPrograma = Pc
-        self.memoriaPrincipal = Memoria
-        self.alu = Alu
+        self.registroInstrucciones = Ir()
+        self.contadorPrograma = Pc()
+        self.memoriaPrincipal = Memoria()
+        self.alu = Alu()
         self.decodificador = ""
         self.operacionesPosibles = {'OUTPUT': "print",
                                      'COMPARE': "==",
@@ -71,15 +74,15 @@ class Uc:
             case "POP":
                 print(self.pilaOperandos.pop())
             case "INCREMENT":
-                self.enviarAlu(1, "+1")
+                self.enviarAlu("1", "+1")
             case "DECREMENT":
-                self.enviarAlu(1, "-1")
+                self.enviarAlu("1", "-1")
             case "AND":
                 self.enviarAlu("and")
             case "OR":
                 self.enviarAlu("or")
             case "NOT":
-                self.enviarAlu(-1,"*")
+                self.enviarAlu("-1","*")
             case "SUM":
                 self.enviarAlu("+")
             case "RES":
