@@ -25,6 +25,10 @@ class Memoria:
         dato = self.DirCont[int(key)]
         self.mbr.setDato(dato)
 
+#carga la mar con la posicion a buscar
+    def cargarMar(self,posicion):
+        self.mar.setDireccion(posicion)
+
 #Carga las instruciones solicitadas a la memoria principal
     def cargarInstruccionesDiccionario(self, lista):
         longitudLista = len(lista)
@@ -36,9 +40,14 @@ class Memoria:
             longitudLista = longitudLista - 1
 
 #Envia el resgistro de instruccion completo para ser decodificado por la UC
-    def CargarRegistro(self):
+    def cargarRegistro(self):
         direccion = self.buscarDireccion()
         self.cargarMBR(direccion)
 
+
+    def getMbr(self):
+        return self.mbr
+    def getMar(self):
+        return self.mar
 
 

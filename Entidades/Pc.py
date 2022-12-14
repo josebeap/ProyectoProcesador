@@ -9,3 +9,6 @@ class Pc:
 
     def reiniciarNumeroInstruccion(self):
         self.numeroInstruccion = 0
+
+    def getNumeroInstr(self):
+        return self.numeroInstruccion
