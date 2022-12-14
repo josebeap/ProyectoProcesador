@@ -46,6 +46,7 @@ class Uc:
 
     def ejecucion(self):
         self.captacion()
+        #bANDERA uc - Alu
         self.alu.operar()
 
 
