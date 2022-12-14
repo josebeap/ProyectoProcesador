@@ -12,3 +12,12 @@ class Controlador:
         #OPCION: TENER BANDERA
         self.uc.ejecucion()
         print(self.uc.alu.getResultado())
+
+    def obtenerRecorrido(self):
+        return self.uc.diccionarioMovimiento
+
+    def resultado(self):
+        return self.uc.pilaOperandos.pop()
+
+    def obtenerPilas(self):
+        return self.uc.pilaOperandosAuxiliar

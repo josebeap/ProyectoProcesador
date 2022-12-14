@@ -1,4 +1,5 @@
 from tkinter import *
+import time
 from Controlador.Controlador import Controlador
 
 class main:
@@ -16,23 +17,33 @@ class main:
         self.mensaje = Text(self.frame, width=25, height=20)
         self.mensaje.place(x=10, y=20)
 
-        self.simbolos = {'Input': (1),
-                         'Output': (2),
-                         'Compare': (3),
-                         'Clear': (4),
-                         'Set': (5),
-                         'Push': (6),
-                         'Pop': (7),
-                         'Incremet': (8),
-                         'Decrement': (9),
+        self.simbolos = {'INPUT': (1),
+                         'OUTPUT': (2),
+                         'COMPARE': (3),
+                         'CLEAR': (4),
+                         'SET': (5),
+                         'PUSH': (6),
+                         'POP': (7),
+                         'INCREMENT': (8),
+                         'DECREMENT': (9),
                          'AND': (10),
                          'OR': (11),
-                         'NOT': (12)
+                         'NOT': (12),
+                         'ADD': (9),
+                         'SUB': (10),
+                         'DIV': (11),
+                         'MPY': (12)
                          }
         self.listaSimbolosCadena = []
-
+        self.recorrido = []
+        self.contador = 0
+        self.resultadoFinal = ''
+        self.pilas = []
         self.button2 = Button(
             button2=Button(self.frame, text="Cargar Datos", command=self.cargarTodo).place(x=10, y=400))
+
+        self.button3 = Button(
+            button2=Button(self.frame, text="Pintar Recorrido", command=self.contadorPintada).place(x=10, y=500))
 
         self.map = Canvas(self.frame, width=1360, height=760, bg='grey')
         self.map.place(x=250, y=0)
@@ -92,8 +103,8 @@ class main:
         self.map.create_rectangle(340, 190, 480, 250, fill="yellow2")
 
         # Lineas Mbr - ALU
-        self.map.create_line(300, 490, 300, 660, width=8, fill="black")
-        self.map.create_line(300, 660, 180, 660, width=8, fill="black")
+        #self.map.create_line(300, 490, 300, 660, width=8, fill="black")
+        #self.map.create_line(300, 660, 180, 660, width=8, fill="black")
 
         # Lineas Mbr - memoria
         self.map.create_line(180, 690, 850, 690, width=8, fill="black")
@@ -137,9 +148,8 @@ class main:
 
     # metodo para mostrar la cadena ingresada
     def mostrar(self):
-        self.map.create_text(
-            1000, 60, fill="black", font="Times 10", text=self.mensaje.get(1.0, "end-1c"))
-        listaRetorno = self.separar_Cadena(self.mensaje.get(1.0, "end-1c"))
+        self.map.create_text(1000, 100, fill="black", font="Times 30", text=self.resultadoFinal)
+        #listaRetorno = self.separar_Cadena(self.mensaje.get(1.0, "end-1c"))
         #self.mostrarDatosMemoria(listaRetorno)
 
     #Pintar datos en la memoria
@@ -215,7 +225,101 @@ class main:
         lista = self.separar_Cadena(self.mensaje.get(1.0, "end-1c"))
         self.mostrarDatosMemoria(self.listaSimbolosCadena)
         self.controlador.cargarIntruccionesVista(lista)
+        print("Recorrido", self.controlador.obtenerRecorrido())
+        self.recorrido = self.controlador.obtenerRecorrido()
+        #self.pintarRecorrido()
+        self.resultadoFinal = self.controlador.resultado()
+        self.mostrar()
+        self.pilas = self.controlador.obtenerPilas()
+        self.pintarPila()
 
 
+    def pintarRecorrido(self):
+
+        for i in self.recorrido:
+            if(i[0] == 'UC' and i[1] == 'Memoria'):
+                self.pintar_uc_mar()
+                self.pintar_mar_memoria()
+            if (i[0] == 'PC' and i[1] == 'UC'):
+                self.pintar_uc_pc()
+            if (i[0] == 'UC' and i[1] == 'MAR'):
+                self.pintar_uc_mar()
+            if (i[0] == 'PC' and i[1] == 'PC'):
+                self.pintar_pc_pc()
+            if (i[0] == 'Memoria' and i[1] == 'MBR'):
+                self.pintar_mbr_memoria()
+            if (i[0] == 'MBR' and i[1] == 'UC'):
+                self.píntar_mbr_uc()
+            if (i[0] == 'UC' and i[1] == 'IR'):
+                self.pintar_uc_ir()
+            if (i[0] == 'UC' and i[1] == 'ALU'):
+                self.pintar_uc_alu()
+
+    def contadorPintada(self):
+        self.pintarNegro()
+        tupla = self.recorrido[self.contador]
+        print("esta es la tupla", tupla)
+        if (tupla[0] == 'UC' and tupla[1] == 'Memoria'):
+            self.pintar_uc_mar()
+            self.pintar_mar_memoria()
+        if (tupla[0] == 'PC' and tupla[1] == 'UC'):
+            self.pintar_uc_pc()
+        if (tupla[0] == 'UC' and tupla[1] == 'MAR'):
+            self.pintar_uc_mar()
+        if (tupla[0] == 'PC' and tupla[1] == 'PC'):
+            self.pintar_pc_pc()
+        if (tupla[0] == 'Memoria' and tupla[1] == 'MBR'):
+            self.pintar_mbr_memoria()
+        if (tupla[0] == 'MBR' and tupla[1] == 'UC'):
+            self.píntar_mbr_uc()
+        if (tupla[0] == 'UC' and tupla[1] == 'IR'):
+            self.pintar_uc_ir()
+        if (tupla[0] == 'UC' and tupla[1] == 'ALU'):
+            self.pintar_uc_alu()
+        self.contador = self.contador + 1
+
+    def pintarNegro(self):
+        # Lineas Mbr - memoria
+        self.map.create_line(180, 690, 850, 690, width=8, fill="black")
+
+        # Lineas uc - mar
+        self.map.create_line(600, 420, 550, 420, width=8, fill="black")
+        self.map.create_line(550, 420, 550, 150, width=8, fill="black")
+        self.map.create_line(550, 150, 100, 150, width=8, fill="black")
+        self.map.create_line(100, 150, 100, 120, width=8, fill="black")
+
+        # Lineas uc - ir
+        self.map.create_line(600, 380, 580, 380, width=8, fill="black")
+        self.map.create_line(580, 380, 580, 100, width=8, fill="black")
+        self.map.create_line(580, 100, 500, 100, width=8, fill="black")
+
+        # Lineas uc - pc
+        self.map.create_line(650, 300, 650, 350, width=8, fill="black")
+
+        # Lineas pc a pc
+        self.map.create_line(670, 200, 670, 170, width=8, fill="black")
+        self.map.create_line(670, 170, 780, 170, width=8, fill="black")
+        self.map.create_line(780, 170, 780, 250, width=8, fill="black")
+        self.map.create_line(780, 250, 750, 250, width=8, fill="black")
+
+        # lineas mar - memoria
+        self.map.create_line(150, 30, 150, 10, width=8, fill="black")
+        self.map.create_line(150, 10, 870, 10, width=8, fill="black")
+        self.map.create_line(870, 10, 870, 350, width=8, fill="black")
+
+        # Lineas Mbr - uc
+        self.map.create_line(650, 600, 650, 675, width=8, fill="black")
+        self.map.create_line(650, 675, 180, 675, width=8, fill="black")
+
+        # Lineas UC - ALU
+        self.map.create_line(350, 490, 350, 550, width=8, fill="black")
+        self.map.create_line(350, 550, 600, 550, width=8, fill="black")
+
+    def pintarPila(self):
+        print("La pila es", self.pilas)
+        for i in self.pilas:
+            for e in i:
+                self.map.create_text(700, 470, fill="black", font="Times 30", text="pila")
+                self.map.create_text(700, 490, fill="black", font="Times 10", text=e)
 
 main()
